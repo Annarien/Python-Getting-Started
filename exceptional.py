@@ -2,7 +2,10 @@
 https://app.pluralsight.com/course-player?clipId=a8b1ac0f-c305-4505-a0d8-b40f4f858fcf """
 
 # imports
+import sys
+from math import log
 
+# this is the DIGIT_MAP used throughout this file
 DIGIT_MAP = {
     'zero': '0',
     'one': '1',
@@ -22,36 +25,23 @@ def convert(s):
     ''' Convert sting to integer'''
     # using try and except blocks to overcome KeyErrors when the token is not available in DIGIT_MAP
     x = -1
-    try:                                            # try raises exceptions
+    try:  # try raises exceptions
         number = ''
         for token in s:
             number += DIGIT_MAP[token]
-        x = int(number)                             # convert string to integer
-        print(f"Conversion succeeded! x = {x}")     # print on success
-    # except KeyError:                                # except handles exceptions for KeyError, tokens are not in
-    #                                                 # Digit_Map as in string_to_integer2
-    #     print("Conversion failed!")                 # print on failure
-    #     x = -1
-    # except TypeError:                               # except handles exceptions for TypeError, when the tokens is a
-    #                                                 # not a string as in string_to_integer3
-    #     print("Conversion failed!")
-    #     x = -1
-
-    except(KeyError, TypeError):                      # combined the previous statements to create one simple statement.
-        print("Conversion failed!")
-
-    return x  # return the integer
+        return int(number)
+    except(KeyError, TypeError) as e:  # e is a keyword
+        print(f"Conversion error:{e!r}", file=sys.stderr)  # print standard error message
+        raise  # re-raise the exception
+        return -1
 
 
-# to see if we are able to convert a strings to an integers
-string_to_integer1 = convert("one three three seven".split())
-print(string_to_integer1)
+def string_log(s):
+    v = convert(s)  # calls convert() function
+    return log(v)  # computes natural log
 
-# to see if we are able to convert some arbitrary string
-string_to_integer2 = convert("around two grillion".split())
-print(string_to_integer2)   # this causes a KeyError as the 'around' cant be converted to an integer, this is because
-                            # there is no 'around' key in DIGIT_MAP
 
-string_to_integer3 = convert(512)
-print(string_to_integer3)   # this causes a TypeError as the value 512 is
-                            # an integer and not a string as expected in the convert function
+# converting strings to logs
+string_log1 = string_log("ouch!".split())  # this raises a ValueError: math domain error
+string_log2 = string_log("cat dog".split())  # this raises a ValueError: math domain error
+string_log3 = string_log(87452874561)  # this raises a ValueError: math domain error
