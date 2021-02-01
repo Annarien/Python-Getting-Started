@@ -1,4 +1,5 @@
-""" This follows the words.py work in Core Python: Getting Started"""
+""" This follows the words.py work in Core Python: Getting Started: https://app.pluralsight.com/course-player?clipId=d9831185-9fc1-4707-8d8d-b6a7608feb12"""
+
 # imports
 import sys
 from urllib.request import urlopen
